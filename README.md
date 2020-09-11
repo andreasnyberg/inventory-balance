@@ -9,10 +9,17 @@ Inventory balance CLI
 
 ## Usage/commands
 
-Display current inventory balance:
+Display current inventory balance.
 ```
 L
 ```
+---
+Toggle the 'auto doubler'.
+```
+T
+```
+*(The amount times two is automatically added to the inventory if a product was sold)*
+
 ---
 Add X products to inventory.
 ```

@@ -18,15 +18,23 @@ module.exports = {
     console.log(boxen(text + amountStr, boxenOptions));
   },
   printError: (message) => {
-    console.log(chalk.red(message));
+    console.log(chalk.red('\n' + message));
   },
   printActionSell: (amount) => {
     const amountStr = chalk.magenta(amount.toString());
+
     console.log(chalk.white(`\n Selling ${amountStr} from inventory.`));
   },
-  printActionAdd: (amount) => {
+  printActionAdd: (amount, autoDoubled = false) => {
     const amountStr = chalk.magenta(amount.toString());
-    console.log(chalk.white(`\n Adding ${amountStr} to inventory.`));
+    const autoStr = autoDoubled ? '(automatically)' : '';
+
+    console.log(chalk.white(`\n Adding ${amountStr} to inventory. ${autoStr}`));
+  },
+  printActionAutoDoublerToggled: (isActive) => {
+    const activeStr = isActive ? 'ON' : 'OFF';
+
+    console.log(chalk.white(`\n Toggle 'auto doubler', now its ${chalk.cyan(activeStr)}.`));
   },
 };
 

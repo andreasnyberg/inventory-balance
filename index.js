@@ -7,7 +7,8 @@ const {
   printCurrentBalance,
   printError,
   printActionSell,
-  printActionAdd 
+  printActionAdd,
+  printActionAutoDoublerToggled,
 } = require('./presentation');
 
 const handleInput = input => {
@@ -24,13 +25,19 @@ const handleInput = input => {
         
         if (b.isBalanceBelowZero(inputAmount)) {
           printError('Ooops, not enough amount of products in inventory. Aborting!');
-        } else {
-          b.subtractFromBalance(inputAmount);
-          printActionSell(inputAmount);
+          break;
+        }
+        
+        b.subtractFromBalance(inputAmount);
+        printActionSell(inputAmount);
+
+        // 'Auto doubler'
+        if (b.isAutoDoublerActive) {
+          const doubledAmount = inputAmount * 2;
+          printActionAdd(doubledAmount, true);
         }
 
         printCurrentBalance(b.getBalance());
-
         break;
       }
 
@@ -44,6 +51,16 @@ const handleInput = input => {
         
         printActionAdd(inputAmount);
         printCurrentBalance(b.getBalance());
+        break;
+      }
+
+    // Toggle the 'auto doubler'.
+    case 'T':
+
+      // Check if command is valid.
+      if (input.length === 1) {
+        b.toggleAutoDoubler();
+        printActionAutoDoublerToggled(b.isAutoDoublerActive);
         break;
       }
 
