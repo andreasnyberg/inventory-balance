@@ -18,13 +18,13 @@ Add X products to inventory.
 ```
 I + <amount>
 ```
-
-*For example:* `I13` adds 13 products.
-
 ---
 Sell X products from inventory.
 ```
 S + <amount>
 ```
+---
 
-*For example:* `S11` sells 11 products.
+*Examples:*  
+`I13` adds 13 products.  
+`S11` sells 11 products.
