@@ -2,15 +2,13 @@
   "name": "inventory-balance",
   "version": "1.0.0",
   "description": "",
-  "main": "bin/index.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
   },
   "author": "",
   "license": "ISC",
-  "bin": {
-    "hello": "./bin/index.js"
-  },
   "dependencies": {
     "boxen": "^4.0.0",
     "chalk": "^2.4.2",
