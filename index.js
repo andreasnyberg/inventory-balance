@@ -13,28 +13,31 @@ const {
 
 const handleInput = input => {
   const firstChar = input.charAt(0).toUpperCase();
-  const followingChars = input.substring(1, input.length);
+  const secondChar = input.charAt(1).toUpperCase();
+  const followingChars = input.substring(2, input.length);
+  const productExistsInInventory = Object.keys(b.balance).includes(secondChar);
 
   switch (firstChar) {
     // Sell from inventory.
     case 'S':
-
+      
       // Check if command is valid.
-      if (isNumbersOnly(followingChars)) {
+      if (productExistsInInventory && isNumbersOnly(followingChars)) {
+        const product = secondChar;
         const inputAmount = parseInt(followingChars, 10);
         
-        if (b.isBalanceBelowZero(inputAmount)) {
-          printError('Ooops, not enough amount of products in inventory. Aborting!');
+        if (b.isBalanceBelowZero(product, inputAmount)) {
+          printError(`Ooops, not enough amount of product ${product} in inventory. Aborting!`);
           break;
         }
         
-        b.subtractFromBalance(inputAmount);
-        printActionSell(inputAmount);
+        b.subtractFromBalance(product, inputAmount);
+        printActionSell(product, inputAmount);
 
         // 'Auto doubler'
         if (b.isAutoDoublerActive) {
           const doubledAmount = inputAmount * 2;
-          printActionAdd(doubledAmount, true);
+          printActionAdd(product, doubledAmount, true);
         }
 
         printCurrentBalance(b.getBalance());
@@ -43,13 +46,14 @@ const handleInput = input => {
 
     // Add to inventory.
     case 'I':
-
+      
       // Check if command is valid.
-      if (isNumbersOnly(followingChars)) {
+      if (productExistsInInventory && isNumbersOnly(followingChars)) {
+        const product = secondChar;
         const inputAmount = parseInt(followingChars, 10);
-        b.addToBalance(inputAmount);
+        b.addToBalance(product, inputAmount);
         
-        printActionAdd(inputAmount);
+        printActionAdd(product, inputAmount);
         printCurrentBalance(b.getBalance());
         break;
       }
@@ -70,7 +74,6 @@ const handleInput = input => {
       // Check if command is valid.
       if (input.length === 1) {
         printCurrentBalance(b.getBalance());
-
         break;
       }
     default:

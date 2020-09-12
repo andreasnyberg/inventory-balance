@@ -2,39 +2,56 @@ const boxen = require('boxen');
 const chalk = require('chalk');
 
 module.exports = {
-  printCurrentBalance: (amount) => {
+  printCurrentBalance: (inventoryList) => {
     const boxenOptions = {
       margin: {
         bottom: 1
       },
       padding: 1,
       borderStyle: "round",
-      borderColor: "green",
+      borderColor: "grey",
     };
-  
-    const text = chalk.white('Inventory balance: \n'); 
-    const amountStr = chalk.green.bold(amount.toString());
-  
-    console.log(boxen(text + amountStr, boxenOptions));
+        
+    let inventoryStr = 'Inventory balance: \n \n'; 
+    const productsArr = Object.keys(inventoryList);
+
+    productsArr.forEach((item, i) => {
+      const product = chalk.yellow.bold(`${item}`);
+      const amount = chalk.magenta(`${inventoryList[item]}`);
+      const isLast = (i + 1) === productsArr.length;
+      const lineBreak = isLast ? '' : '\n';
+
+      inventoryStr += `${product}: ${amount} ${lineBreak}`;
+    });
+
+    const inventoryStrWhite = chalk.white(inventoryStr);
+    
+    console.log(boxen(inventoryStrWhite, boxenOptions));
   },
   printError: (message) => {
     console.log(chalk.red('\n' + message));
   },
-  printActionSell: (amount) => {
-    const amountStr = chalk.magenta(amount.toString());
+  printActionSell: (p, a) => {
+    const product = chalk.yellow.bold(p);
+    const amount = chalk.magenta(a.toString());
+    const message = `\n Selling ${amount} of product ${product} from inventory.`;
 
-    console.log(chalk.white(`\n Selling ${amountStr} from inventory.`));
+    console.log(chalk.white(message));
   },
-  printActionAdd: (amount, autoDoubled = false) => {
-    const amountStr = chalk.magenta(amount.toString());
+  printActionAdd: (p, a, autoDoubled = false) => {
+    const product = chalk.yellow.bold(p);
+    const amount = chalk.magenta(a.toString());
     const autoStr = autoDoubled ? '(automatically)' : '';
+    const lineBreak = autoDoubled ? '' : '\n';
+    const message = `${lineBreak} Adding ${amount} of product ${product} to inventory. ${autoStr}`;
 
-    console.log(chalk.white(`\n Adding ${amountStr} to inventory. ${autoStr}`));
+    console.log(chalk.white(message));
   },
   printActionAutoDoublerToggled: (isActive) => {
     const activeStr = isActive ? 'ON' : 'OFF';
+    const message = `\n Toggle 'auto doubler', now its ${chalk.cyan(activeStr)}.`;
 
-    console.log(chalk.white(`\n Toggle 'auto doubler', now its ${chalk.cyan(activeStr)}.`));
+    console.log(chalk.white(message));
   },
 };
 
