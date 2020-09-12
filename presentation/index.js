@@ -2,7 +2,7 @@ const boxen = require('boxen');
 const chalk = require('chalk');
 
 module.exports = {
-  printCurrentBalance: (inventoryList) => {
+  printCurrentInventoryBalance: (inventoryList) => {
     const boxenOptions = {
       margin: {
         bottom: 1

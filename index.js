@@ -2,9 +2,9 @@
 const prompts = require('prompts');
 
 const { isNumbersOnly } = require('./helpers');
-const { balanceHandler: b } = require('./logic');
+const { inventoryHandler: inv } = require('./logic');
 const {
-  printCurrentBalance,
+  printCurrentInventoryBalance,
   printError,
   printActionSell,
   printActionAdd,
@@ -12,49 +12,50 @@ const {
 } = require('./presentation');
 
 const handleInput = input => {
+  if (!input) return;
   const firstChar = input.charAt(0).toUpperCase();
   const secondChar = input.charAt(1).toUpperCase();
   const followingChars = input.substring(2, input.length);
-  const productExistsInInventory = Object.keys(b.balance).includes(secondChar);
+  const productExistsInInventory = Object.keys(inv.inventory).includes(secondChar);
 
   switch (firstChar) {
     // Sell from inventory.
     case 'S':
-      
+
       // Check if command is valid.
       if (productExistsInInventory && isNumbersOnly(followingChars)) {
         const product = secondChar;
-        const inputAmount = parseInt(followingChars, 10);
+        const amount = parseInt(followingChars, 10);
         
-        if (b.isBalanceBelowZero(product, inputAmount)) {
+        if (inv.isProductAmountBelowZero(product, amount)) {
           printError(`Ooops, not enough amount of product ${product} in inventory. Aborting!`);
           break;
         }
         
-        b.subtractFromBalance(product, inputAmount);
-        printActionSell(product, inputAmount);
+        inv.subtractFromInventory(product, amount);
+        printActionSell(product, amount);
 
         // 'Auto doubler'
-        if (b.isAutoDoublerActive) {
-          const doubledAmount = inputAmount * 2;
+        if (inv.isAutoDoublerActive) {
+          const doubledAmount = amount * 2;
           printActionAdd(product, doubledAmount, true);
         }
 
-        printCurrentBalance(b.getBalance());
+        printCurrentInventoryBalance(inv.getBalance());
         break;
       }
 
     // Add to inventory.
     case 'I':
-      
+
       // Check if command is valid.
       if (productExistsInInventory && isNumbersOnly(followingChars)) {
         const product = secondChar;
-        const inputAmount = parseInt(followingChars, 10);
-        b.addToBalance(product, inputAmount);
+        const amount = parseInt(followingChars, 10);
+        inv.addToInventory(product, amount);
         
-        printActionAdd(product, inputAmount);
-        printCurrentBalance(b.getBalance());
+        printActionAdd(product, amount);
+        printCurrentInventoryBalance(inv.getBalance());
         break;
       }
 
@@ -63,8 +64,8 @@ const handleInput = input => {
 
       // Check if command is valid.
       if (input.length === 1) {
-        b.toggleAutoDoubler();
-        printActionAutoDoublerToggled(b.isAutoDoublerActive);
+        inv.toggleAutoDoubler();
+        printActionAutoDoublerToggled(inv.isAutoDoublerActive);
         break;
       }
 
@@ -73,7 +74,7 @@ const handleInput = input => {
 
       // Check if command is valid.
       if (input.length === 1) {
-        printCurrentBalance(b.getBalance());
+        printCurrentInventoryBalance(inv.getBalance());
         break;
       }
     default:

@@ -1,25 +1,25 @@
-const balanceHandler = {
-  balance: {
+const inventoryHandler = {
+  inventory: {
     A: 0,
     B: 0,
     C: 0,
   },
   isAutoDoublerActive: false,
   getBalance: function() {
-    return this.balance;
+    return this.inventory;
   },
-  addToBalance: function(product, amount) {
-    this.balance[product] = this.balance[product] + amount;
+  addToInventory: function(product, amount) {
+    this.inventory[product] = this.inventory[product] + amount;
   },
-  subtractFromBalance: function(product, amount) {
-    this.balance[product] = this.balance[product] - amount;
+  subtractFromInventory: function(product, amount) {
+    this.inventory[product] = this.inventory[product] - amount;
 
     if (this.isAutoDoublerActive) {
-      this.addToBalance(product, amount * 2);
+      this.addToInventory(product, amount * 2);
     }
   },
-  isBalanceBelowZero: function(product, amount) {
-    return this.balance[product] - amount < 0;
+  isProductAmountBelowZero: function(product, amount) {
+    return this.inventory[product] - amount < 0;
   },
   toggleAutoDoubler: function() {
     this.isAutoDoublerActive = !this.isAutoDoublerActive;
@@ -27,6 +27,6 @@ const balanceHandler = {
 }
 
 module.exports = {
-  balanceHandler
+  inventoryHandler
 };
 
