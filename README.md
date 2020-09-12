@@ -1,6 +1,6 @@
 # inventory-balance
 
-Inventory balance CLI
+Inventory balance CLI. The inventory contains the products "A", "B" and "C";
 
 ## Installation
 * Clone repo
@@ -21,17 +21,17 @@ T
 *(The amount times two is automatically added to the inventory if a product was sold)*
 
 ---
-Add X products to inventory.
+Add product(s) to inventory.
 ```
-I + <amount>
+I + <product> + <amount>
 ```
 ---
-Sell X products from inventory.
+Sell product(s) from inventory.
 ```
-S + <amount>
+S + <product> + <amount>
 ```
 ---
 
 *Examples:*  
-`I13` adds 13 products.  
-`S11` sells 11 products.
+`IA13` adds 13 "A".  
+`SB11` sells 11 "B".
