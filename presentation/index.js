@@ -34,22 +34,27 @@ module.exports = {
   printActionSell: (p, a) => {
     const product = chalk.yellow.bold(p);
     const amount = chalk.magenta(a.toString());
-    const message = `\n Selling ${amount} of product ${product} from inventory.`;
+    const message = `Selling ${amount} of product ${product} from inventory.`;
 
     console.log(chalk.white(message));
   },
   printActionAdd: (p, a, autoDoubled = false) => {
     const product = chalk.yellow.bold(p);
     const amount = chalk.magenta(a.toString());
-    const autoStr = autoDoubled ? '(automatically)' : '';
-    const lineBreak = autoDoubled ? '' : '\n';
-    const message = `${lineBreak} Adding ${amount} of product ${product} to inventory. ${autoStr}`;
+    const autoStr = autoDoubled ? ' (automatically)' : '';
+    const message = `Adding ${amount} of product ${product} to inventory${autoStr}.`;
 
     console.log(chalk.white(message));
   },
+  printActionPackageDeal: (n) => {
+    const name = chalk.yellow(n);
+    const message = `Selling package deal ${name}:`;
+
+    console.log(chalk.white.bold(message));
+  },
   printActionAutoDoublerToggled: (isActive) => {
     const activeStr = isActive ? 'ON' : 'OFF';
-    const message = `\n Toggle 'auto doubler', now its ${chalk.cyan(activeStr)}.`;
+    const message = `Toggle 'auto doubler', now its ${chalk.cyan(activeStr)}.`;
 
     console.log(chalk.white(message));
   },

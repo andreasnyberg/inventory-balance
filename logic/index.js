@@ -4,6 +4,18 @@ const inventoryHandler = {
     B: 0,
     C: 0,
   },
+  packageDeals: {
+    SP1: {
+      A: 5,
+      B: 5,
+      C: 5,
+    },
+    SP2: {
+      A: 1,
+      B: 2,
+      C: 3,
+    },
+  },
   isAutoDoublerActive: false,
   getBalance: function() {
     return this.inventory;

@@ -31,7 +31,13 @@ Sell product(s) from inventory.
 S + <product> + <amount>
 ```
 ---
+Sell products from inventory by package deals (multiple products in one command). Currently the inventory offers package deals "1" (5 items of each product) & "2" (1 product "A", 2 product "B" & 3 product "C").
+```
+SP + <package deal number>
+```
+---
 
 *Examples:*  
-`IA13` adds 13 "A".  
-`SB11` sells 11 "B".
+`IA13` adds 13 product "A".  
+`SB11` sells 11 product "B".  
+`SP2` sells package deal "2".
